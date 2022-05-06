@@ -1,0 +1,9 @@
+# complied output
+/dist
+/node_modules
+
+#logs
+*.log
+
+
+
