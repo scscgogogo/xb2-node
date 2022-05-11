@@ -1,41 +1,41 @@
-const http = require('http');
-
-const server = http.createServer((request, response) => {
-  // console.log(request.headers["user-agent"]);
-  // response.writeHead(200, {
-  //   "Content-Type": "text/html",
-  // });
-  // response.write(`<input />`);
-  // response.end();
-  // switch (request.url) {
-  //   case "/":
-  //     response.write("hello~");
-  //     break;
-  //   case "/posts":
-  //     response.write("post");
-  //     break;
-  //   case "/signup":
-  //     response.write("signup");
-  //     break;
-  //   default:
-  //     response.writeHead(404);
-  //     response.write("404");
-  //     break;
-  // }
-
-  const data = {
-    id: 1,
-    title: '静夜思',
-    content: '床前明月光，疑是地上霜',
-  };
-  const jsonData = JSON.stringify(data);
-  response.writeHead(200, {
-    'Content-Type': 'application/json;charset=utf-8',
-  });
-  response.write(jsonData);
-  response.end();
+const express = require('express');
+const app = express();
+const port = 3000;
+app.listen(port, () => {
+  console.log('服务已启动！');
+});
+app.get('/', (request, response) => {
+  response.send('你好');
 });
 
-server.listen(3000, () => {
-  console.log('🚀服务已启动！');
+const data = [
+  {
+    id: 1,
+    title: '忆江南',
+    content: '江南好，风景旧曾谙',
+  },
+  {
+    id: 2,
+    title: '静夜思',
+    content: '床前明月光，疑是地上霜',
+  },
+  {
+    id: 3,
+    title: '琵琶行',
+    content: '同是天涯沦落人，相逢何必曾相识',
+  },
+];
+app.get('/posts', (request, response) => {
+  response.send(data);
+});
+
+app.get('/posts/:postId', (request, response) => {
+  //获取内容ID
+  const { postId } = request.params;
+
+  //查找具体内容
+  const posts = data.filter(item => item.id == postId);
+
+  //做出响应
+  response.send(posts[0]);
 });
