@@ -54,6 +54,8 @@ app.post('/posts', (request, response) => {
   response.status(201);
   //输出请求头部数据
   console.log(request.headers['sing-along']);
+  //设置响应头部数据
+  response.set('Sing-Along', 'How I wonder what you are');
   response.send({
     message: `成功创建了内容: ${content}`,
   });
