@@ -52,6 +52,8 @@ app.post('/posts', (request, response) => {
   //获取请求里的数据
   const { content } = request.body;
   response.status(201);
+  //输出请求头部数据
+  console.log(request.headers['sing-along']);
   response.send({
     message: `成功创建了内容: ${content}`,
   });
