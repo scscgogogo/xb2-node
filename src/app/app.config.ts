@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-dotenv.config;
+dotenv.config();
 
 /**
  * 应用配置
