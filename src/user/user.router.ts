@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * 创建用户
  */
-router.post('./users', userController.store);
+router.post('/users', userController.store);
 
 /**
  * 导出路由
