@@ -8,4 +8,5 @@ logs
 
 # APP
 .env*
+config/*.key
 
