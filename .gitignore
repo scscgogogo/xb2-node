@@ -6,7 +6,13 @@
 *.log
 logs
 
+
+# IDE VSCode
+.vscode/*
+!.vscode/*.code-snippets
+
 # APP
 .env*
 config/*.key
+/uploads
 
