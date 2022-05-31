@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import _ from 'lodash';
+import { MessageChannel } from 'worker_threads';
 import { createFile, findFileById } from './file.service';
 
 /**
@@ -30,6 +31,7 @@ export const store = async (
       ...fileInfo,
       userId,
       postId: parseInt(`${postId}`, 10),
+      ...request.fileMetaData,
     });
 
     //做出响应

@@ -4,6 +4,7 @@ declare global {
   namespace Express {
     export interface Request {
       user: TokenPayLoad;
+      fileMetaData: { width?: number; height?: number; metadata?: {} };
     }
   }
 }
