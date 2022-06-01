@@ -15,7 +15,7 @@ export const createTag = async (tag: TagModel) => {
   const [data] = await connection.promise().query(statement, tag);
 
   //提供数据
-  return data;
+  return data as any;
 };
 
 /**
