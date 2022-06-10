@@ -15,7 +15,6 @@ import { getTagByName, createTag } from '../tag/tag.service';
 /**
  * 内容列表
  */
-
 export const index = async (
   request: Request,
   response: Response,
@@ -25,6 +24,7 @@ export const index = async (
     const posts = await getPosts({
       sort: request.sort,
       filter: request.filter,
+      pagination: request.pagination,
     });
     response.send(posts);
   } catch (error) {
