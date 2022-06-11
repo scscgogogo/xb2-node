@@ -92,7 +92,7 @@ export const paginate = async (
   const limit = parseInt(POSTS_PER_PAGE, 10) || 30;
 
   // 计算出偏移量
-  const offset = limit * (parseInt(`${page}`) - 1);
+  const offset = limit * (parseInt(`${page}`, 10) - 1);
 
   // 设置请求中的分页
   request.pagination = { limit, offset };
