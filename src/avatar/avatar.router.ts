@@ -15,6 +15,10 @@ router.post(
   avatarProcessor,
   avatarController.store,
 );
+/**
+ * 头像服务
+ */
+router.get('/users/:userId/avatar', avatarController.serve);
 
 /**
  * 导出路由
