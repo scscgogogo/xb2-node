@@ -72,7 +72,14 @@ export const filter = async (
       param: `${user}`,
     };
   }
-
+  // 过滤出用户选赞过的内容
+  if (user && action == 'liked' && !tag) {
+    request.filter = {
+      name: 'userLiked',
+      sql: 'user_like_post.userId = ?',
+      param: `${user}`,
+    };
+  }
   // 下一步
   next();
 };
