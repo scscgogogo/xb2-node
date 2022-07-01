@@ -81,12 +81,12 @@ export const deleteComment = async (commentId: number) => {
 /**
  * 获取评论列表
  */
-interface GetCommentOptions {
+interface GetCommentsOptions {
   filter?: GetPostsOptionsFilter;
   pagination?: GetPostsOptionsPagination;
 }
 
-export const getComments = async (options: GetCommentOptions) => {
+export const getComments = async (options: GetCommentsOptions) => {
   // 解构选择
   const {
     filter,
@@ -126,6 +126,74 @@ export const getComments = async (options: GetCommentOptions) => {
 
   // 执行查询
   const [data] = await connection.promise().query(statement, params);
+
+  // 提供数据
+  return data;
+};
+/**
+ * 统计评论数量
+ */
+export const getCommentsTotalCount = async (options: GetCommentsOptions) => {
+  // 解构选项
+  const { filter } = options;
+
+  // SQL 参数
+  let params: Array<any> = [];
+
+  // 设置 SQL 参数
+  if (filter.param) {
+    params = [filter.param, ...params];
+  }
+
+  // 准备查询
+  const statement = `
+    SELECT
+      COUNT(
+        DISTINCT comment.id
+      ) as total
+    FROM
+      comment
+    ${sqlFragment.leftJoinUser}
+    ${sqlFragment.leftJoinPost}
+    WHERE
+      ${filter.sql}
+  `;
+
+  // 执行查询
+  const [data] = await connection.promise().query(statement, params);
+
+  // 提供结果
+  return data[0].total;
+};
+
+/**
+ * 评论回复列表
+ */
+interface GetCommentRepliesOptions {
+  commentId: number;
+}
+
+export const getCommentReplies = async (options: GetCommentRepliesOptions) => {
+  // 解构选项
+  const { commentId } = options;
+
+  // 准备查询
+  const statement = `
+    SELECT
+      comment.id,
+      comment.content,
+      ${sqlFragment.user}
+    FROM
+      comment
+    ${sqlFragment.leftJoinUser}
+    WHERE
+      comment.parentId = ?
+    GROUP BY
+      comment.id
+  `;
+
+  // 执行查询
+  const [data] = await connection.promise().query(statement, commentId);
 
   // 提供数据
   return data;
